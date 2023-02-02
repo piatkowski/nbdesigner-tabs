@@ -85,23 +85,43 @@ class Post {
 			'high'
 		);
 
+		add_meta_box(
+			self::META_PREFIX . 'categories',
+			__( 'Przypisanie do kategorii', 'nbdesigner-tabs' ),
+			function ( $post, $data ) {
+				include __DIR__ . '/../views/admin/post-categories.php';
+			},
+			self::POST_TYPE,
+			'side'
+		);
+
+		add_meta_box(
+			self::META_PREFIX . 'validation_message',
+			__( 'Komunikat o błędzie', 'nbdesigner-tabs' ),
+			function ( $post, $data ) {
+				include __DIR__ . '/../views/admin/post-validation-message.php';
+			},
+			self::POST_TYPE,
+			'side'
+		);
+
 	}
 
 	function enqueue_assets( $hook ) {
 		global $post;
 		if ( $post && $post->post_type === self::POST_TYPE ) {
 			wp_enqueue_editor();
-			wp_enqueue_script('jquery-ui-core');
-			wp_enqueue_script('jquery-ui-sortable');
+			wp_enqueue_script( 'jquery-ui-core' );
+			wp_enqueue_script( 'jquery-ui-sortable' );
 			wp_enqueue_script(
 				self::META_PREFIX . 'admin_js',
-				plugins_url( 'assets/js/bundle.js', Plugin::getPluginPath() ),
+				plugins_url( 'assets/js/bundle.js', Plugin::get_plugin_path() ),
 				[ 'jquery', 'jquery-ui-core', 'jquery-ui-sortable' ],
 				time() //Plugin::VERSION
 			);
 			wp_register_style(
 				self::META_PREFIX . 'admin_css',
-				plugins_url( 'assets/css/admin.min.css', Plugin::getPluginPath() )
+				plugins_url( 'assets/css/admin.min.css', Plugin::get_plugin_path() )
 			);
 			wp_enqueue_style( self::META_PREFIX . 'admin_css' );
 		}
@@ -112,6 +132,21 @@ class Post {
 			$data = wp_slash( sanitize_text_field( $_POST['_nbdf_data'] ) );
 			update_post_meta( $post_id, '_nbdf_data', $data );
 		}
+		if ( isset( $_POST['_nbdf_validation_message'] ) ) {
+			$validation_message = sanitize_textarea_field( $_POST['_nbdf_validation_message'] );
+			update_post_meta( $post_id, '_nbdf_validation_message', $validation_message );
+		}
+
+		$categories = [];
+		if ( ! empty( $_POST['nbdt_categories'] ) && is_array( $_POST['nbdt_categories'] ) ) {
+			foreach ( $_POST['nbdt_categories'] as $category_id ) {
+				$id = (int) $category_id;
+				if ( $id > 0 ) {
+					$categories[] = $id;
+				}
+			}
+		}
+		update_post_meta( $post_id, '_nbdf_categories', $categories );
 	}
 
 }

@@ -1,0 +1,49 @@
+.nbdesigner-tab p {
+  margin: 10px;
+}
+.nbdesigner-tab .nbdt__checkbox-container,
+.nbdesigner-tab .nbdt__quote-container {
+  border-bottom: 1px solid #FFF;
+}
+.nbdesigner-tab .nbdt__checkbox-container:hover, .nbdesigner-tab .nbdt__checkbox-container.active,
+.nbdesigner-tab .nbdt__quote-container:hover,
+.nbdesigner-tab .nbdt__quote-container.active {
+  background-color: #dfe5ec;
+}
+.nbdesigner-tab .nbdt__quote-container {
+  padding: 10px;
+  cursor: pointer;
+}
+.nbdesigner-tab .nbdt__quote-title {
+  margin-bottom: 0;
+  font-weight: 600;
+}
+.nbdesigner-tab .nbdt__quote-content {
+  white-space: pre;
+}
+.nbdesigner-tab .nbdt__checkbox-container label {
+  padding: 10px 20px 10px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  margin: 0;
+}
+.nbdesigner-tab .nbdt__tab-description {
+  padding: 10px 0 10px 0;
+  border-bottom: 1px solid #FFF;
+}
+
+.icon-nbdt {
+  width: 24px;
+  height: 24px;
+  background-size: cover;
+  margin: 0 auto 5px;
+  transition: filter 0.4s ease-out, transform 0.7s ease-out, color 0.6s ease-out, -webkit-transform 0.7s ease-out !important;
+  filter: brightness(100%) sepia(1000) saturate(0%) hue-rotate(180deg);
+}
+
+.active .icon-nbdt {
+  filter: brightness(23%) sepia(1000) saturate(130%) hue-rotate(180deg);
+}
+
+/*# sourceMappingURL=tab.css.map */
