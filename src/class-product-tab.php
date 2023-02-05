@@ -21,6 +21,8 @@ final class ProductTab {
 		$product      = wc_get_product( $post_id );
 		$categories   = $product->get_category_ids();
 		$product_tabs = $product->get_meta( '_nbdt_product_tabs' );
+		$states = is_array( $states ) ? $states : [];
+
 		if ( ! is_array( $product_tabs ) ) {
 			$product_tabs = [];
 		}
@@ -39,11 +41,13 @@ final class ProductTab {
 			$common_categories = array_intersect( $categories, $tab_instance->get_categories() );
 			if ( ! empty( $common_categories ) ) {
 				$tabs[ $tab_post->ID ] = $tab_instance;
+
+				if ( isset( $states[ $tab_post->ID ] ) ) {
+					$tabs[ $tab_post->ID ]->set_state( $states[ $tab_post->ID ] );
+				}
 			}
 			unset( $tab_instance );
 		}
-
-		$states = is_array( $states ) ? $states : [];
 
 		foreach ( $product_tabs as $tab_id ) {
 			if ( ! isset( $tabs[ $tab_id ] ) ) {

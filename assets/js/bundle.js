@@ -59,7 +59,7 @@
     render() {
       return `<div class="nbdt-${this.type} nbdt-field ui-sortable-handle" data-field-id="${this.id}" id="nbdt-${this.id}">
             <label>Pole tekstowe - Tytu\u0142</label>
-            <input type="text" class="nbdt-data" data-key="title" value="${this.data.title}">
+            <input type="text" class="nbdt-data" data-key="title" value="${this.data.title.replace(/"/g, "&quot;")}">
             <label>Tre\u015B\u0107 do wstawienia</label>
             <textarea class="nbdt-data" data-key="content">${this.data.content}</textarea>
         </div>`;
@@ -178,7 +178,7 @@
       const fieldType = $(this).data("type");
       Controller.addField(fieldType);
     });
-    $root2.on("change", ".nbdt-data", function(e) {
+    $root2.on("change", ".nbdt-data", function() {
       const fieldId = $(this).parent().data("fieldId");
       const dataKey = $(this).data("key");
       let updatedData = {};
@@ -189,7 +189,7 @@
       field.remove();
       Controller.removeField(fieldId);
     });
-    $root2.on("field:update", function(e) {
+    $root2.on("field:update", function() {
       $output.val(Controller.save());
       Controller.render(".fields");
     });
@@ -197,7 +197,6 @@
       const serializedData = $output.val();
       Controller.load(serializedData);
     }
-    console.log($root2.children(".fields"));
     $root2.children(".fields").sortable({
       items: ".nbdt-field",
       tolerance: "pointer",

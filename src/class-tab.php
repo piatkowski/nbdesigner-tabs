@@ -50,7 +50,8 @@ class Tab {
 
 		$this->id = $post_id;
 
-		$fields = stripslashes( get_post_meta( $post_id, '_nbdf_data', true ) );
+		//$fields = stripslashes( get_post_meta( $post_id, '_nbdf_data', true ) );
+		$fields = htmlspecialchars_decode( stripslashes( get_post_meta( $post_id, '_nbdf_data', true ) ), ENT_QUOTES );
 		$fields = json_decode( $fields, true );
 		if ( is_array( $fields ) ) {
 			$this->initialize_fields( $fields );

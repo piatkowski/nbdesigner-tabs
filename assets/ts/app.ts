@@ -37,7 +37,6 @@ jQuery($ => {
     }
 
 
-    console.log($root.children('.fields'));
     // @ts-ignore
     $root.children('.fields').sortable({
         items: '.nbdt-field',

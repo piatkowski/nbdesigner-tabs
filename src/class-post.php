@@ -109,7 +109,7 @@ class Post {
 
 	function enqueue_assets( $hook ) {
 		global $post;
-		if ( $post && $post->post_type === self::POST_TYPE ) {
+		if ( $post && $post->post_type === self::POST_TYPE && $hook !== 'edit.php') {
 			wp_enqueue_editor();
 			wp_enqueue_script( 'jquery-ui-core' );
 			wp_enqueue_script( 'jquery-ui-sortable' );
